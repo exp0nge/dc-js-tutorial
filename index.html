@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="static/dc.min.css">
+</head>
+<body>
+<div id="genderPie">
+          <span class='reset' style='visibility: hidden;'>
+          Current filter: <span class='filter'></span>
+        </span>
+    <a class='reset' href="#"
+       style='visibility: hidden;'>reset</a>
+    <br>
+</div>
+<script type="application/javascript" src="static/jquery.min.js"></script>
+<script type="application/javascript" src="static/d3.v3.min.js"></script>
+<script type="application/javascript" src="static/crossfilter.min.js"></script>
+<script type="application/javascript" src="static/dc.min.js"></script>
+<script type="application/javascript">
+    $(document).ready(function () {
+        d3.json('data2.json', function (data) {
+            var genderPieChart = dc.pieChart('#genderPie');
+            var ndx = crossfilter(data);
+            var all = ndx.groupAll();
+            var genderDim = ndx.dimension(function (d) {
+                var sex = d.SEX;
+                if (sex === 1) {
+                    return 'Male';
+                } else if (sex == 2) {
+                    return 'Female';
+                } else {
+                    return 'Unknown';
+                }
+            });
+            genderPieChart
+                    .width(180)
+                    .height(180)
+                    .radius(80)
+                    .dimension(genderDim)
+                    .group(genderDim.group());
+            genderPieChart.controlsUseVisibility(true);
+            $('#genderPie > a').on('click', function (e) {
+                genderPieChart.filterAll();
+                dc.redrawAll();
+            });
+//            console.log(genderDim);
+            dc.renderAll();
+
+        });
+    });
+</script>
+</body>
+</html>
