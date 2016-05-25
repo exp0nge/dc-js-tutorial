@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>dc.js Tutorial Using Default of Credit Clients Data Set</title>
     <link rel="stylesheet" href="static/bulma.min.css">
+    <link rel="stylesheet" href="static/dc.min.css">
 </head>
 <body>
 <section class="hero is-medium is-primary">
@@ -27,12 +28,83 @@
 <section class="section">
     <div class="container">
         <div class="heading">
+            <h1 class="title">Final Visualization</h1>
+            <h2 class="subtitle">
+                This is what it should look like at the end!
+            </h2>
+        </div>
+        <div class="content" style="min-height: 700px;">
+            <div class="columns">
+                <div class="column is-2">
+                    <div id="genderPie">
+                        <span>Genders</span>
+                        <br>
+          <span class='reset' style='visibility: hidden;'>
+          Current filter: <span class='filter'></span>
+        </span>
+                        <a class='reset' href="#"
+                           style='visibility: hidden;'>reset</a>
+                        <br>
+                    </div>
+                </div>
+                <div class="column is-10">
+                    <span>Age vs Defaulted Status</span>
+                    <div id="ageDefaulters">
+    <span class='reset' style='visibility: hidden;'>
+          Current filter: <span class='filter'></span>
+        </span>
+                        <a class='reset'
+                           style='visibility: hidden;'>reset</a>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column is-2">
+                    <div id="marriagePie">
+                        <span>Marital Status</span>
+                        <br>
+          <span class='reset' style='visibility: hidden;'>
+          Current filter: <span class='filter'></span>
+        </span>
+                        <a class='reset' href="#"
+                           style='visibility: hidden;'>reset</a>
+                        <br>
+                    </div>
+
+                </div>
+                <div class="column is-10">
+                    <div id="limitBalDefaulters">
+                        <span>Given Credit</span>
+    <span class='reset' style='visibility: hidden;'>
+          Current filter: <span class='filter'></span>
+        </span>
+                        <a class='reset' href="#"
+                           style='visibility: hidden;'>reset</a>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="heading">
             <h1 class="title">Getting Started</h1>
             <h2 class="subtitle">
                 Grab these components to get started
             </h2>
         </div>
         <div class="content">
+            <div class="columns">
+                <div class="column is-half">
+                    <div class="notification">
+                        The JavaScript files should be added right before the closing tag of <code>body</code> while
+                        the CSS files should go inside the <code>head</code> tag of your HTML document.
+                    </div>
+                </div>
+            </div>
             <ul>
                 <li><a href="https://d3js.org" target="_blank">d3.js</a></li>
                 <li><a href="https://square.github.io/crossfilter/" target="_blank">Crossfilter</a></li>
@@ -49,9 +121,23 @@
 </section>
 
 
+<section class="section">
+    <div class="container">
+        <div class="heading">
+            <h1 class="title">Section</h1>
+            <h2 class="subtitle">
+                A simple container to divide your page into <strong>sections</strong>, like the one you're currently
+                reading
+            </h2>
+        </div>
+    </div>
+</section>
+
+
 <script type="application/javascript" src="static/jquery.min.js"></script>
 <script type="application/javascript" src="static/d3.v3.min.js"></script>
 <script type="application/javascript" src="static/crossfilter.min.js"></script>
 <script type="application/javascript" src="static/dc.min.js"></script>
+<script type="application/javascript" src="static/visualization.js"></script>
 </body>
 </html>
