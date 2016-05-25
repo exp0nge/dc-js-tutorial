@@ -67,6 +67,8 @@ $(document).ready(function () {
             .dimension(ageDefaultersDim)
             .group(ageDefaultersDim.group().reduceSum(dc.pluck('default payment next month')))
             .x(d3.scale.linear().domain(ageMinMax))
+            .elasticY(true)
+            .elasticX(true)
             .xAxisLabel('Age')
             .yAxisLabel('People Who Defaulted');
 
@@ -86,6 +88,7 @@ $(document).ready(function () {
             .x(d3.scale.linear().domain(limitBalMinMax))
             .renderArea(true)
             .mouseZoomable(true)
+            .elasticY(true)
             .xAxisLabel('Amount of Credit Given')
             .yAxisLabel('People');
 
