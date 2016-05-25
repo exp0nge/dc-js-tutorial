@@ -73,7 +73,14 @@ $(document).ready(function () {
             .elasticY(true)
             .elasticX(true)
             .xAxisLabel('Age')
-            .yAxisLabel('People Who Defaulted');
+            .yAxisLabel('People Who Defaulted')
+            .controlsUseVisibility(true);
+
+        $('#ageDefaulters > a').on('click', function (e) {
+            ageDefaultersChart.filterAll();
+            dc.redrawAll();
+            e.preventDefault();
+        });
 
         limitDefaultersDim = ndx.dimension(function (d) {
             return d['LIMIT_BAL'];
@@ -93,7 +100,16 @@ $(document).ready(function () {
             .mouseZoomable(true)
             .elasticY(true)
             .xAxisLabel('Amount of Credit Given')
-            .yAxisLabel('People');
+            .yAxisLabel('People')
+            .turnOnControls(true)
+            .controlsUseVisibility(true);
+
+        $('#limitBalDefaulters > a').on('click', function (e) {
+            limitBalDefaultersChart.focus();
+            limitBalDefaultersChart.filterAll();
+            dc.redrawAll();
+            e.preventDefault();
+        });
 
 
         defaultCountTicker
