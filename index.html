@@ -14,18 +14,27 @@
        style='visibility: hidden;'>reset</a>
     <br>
 </div>
+<div id="ageDefaulters">
+    <span class='reset' style='visibility: hidden;'>
+          Current filter: <span class='filter'></span>
+        </span>
+    <a class='reset' href="#"
+       style='visibility: hidden;'>reset</a>
+    <br>
+</div>
 <script type="application/javascript" src="static/jquery.min.js"></script>
 <script type="application/javascript" src="static/d3.v3.min.js"></script>
 <script type="application/javascript" src="static/crossfilter.min.js"></script>
 <script type="application/javascript" src="static/dc.min.js"></script>
 <script type="application/javascript">
     $(document).ready(function () {
-        d3.json('data2.json', function (data) {
+        d3.json('data.json', function (data) {
             var genderPieChart = dc.pieChart('#genderPie');
+            var ageDefaultersChart = dc.barChart('#ageDefaulters');
             var ndx = crossfilter(data);
             var all = ndx.groupAll();
             var genderDim = ndx.dimension(function (d) {
-                var sex = d.SEX;
+                var sex = d['SEX'];
                 if (sex === 1) {
                     return 'Male';
                 } else if (sex == 2) {
@@ -34,6 +43,11 @@
                     return 'Unknown';
                 }
             });
+            console.log(data[0]['default payment next month']);
+            var ageDefaultersDim = ndx.dimension(function (d) {
+                return d['AGE'];
+            });
+
             genderPieChart
                     .width(180)
                     .height(180)
@@ -45,7 +59,16 @@
                 genderPieChart.filterAll();
                 dc.redrawAll();
             });
-//            console.log(genderDim);
+            ageMinMax = d3.extent(data, function (d) {
+                return d['AGE'];
+            });
+            ageDefaultersChart
+                    .width(990)
+                    .height(300)
+                    .dimension(ageDefaultersDim)
+                    .group(ageDefaultersDim.group().reduceSum(dc.pluck('default payment next month')))
+                    .x(d3.scale.linear().domain(ageMinMax));
+
             dc.renderAll();
 
         });
