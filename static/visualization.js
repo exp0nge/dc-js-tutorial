@@ -4,8 +4,11 @@ $(document).ready(function () {
         var marriagePieChart = dc.pieChart('#marriagePie');
         var ageDefaultersChart = dc.barChart('#ageDefaulters');
         var limitBalDefaultersChart = dc.lineChart('#limitBalDefaulters');
+        var defaultCountTicker = dc.numberDisplay('.default-count');
         var ndx = crossfilter(data);
-        var all = ndx.groupAll();
+        var defaultDim = ndx.dimension(function (d) {
+            return d['default payment next month'];
+        });
         var genderDim = ndx.dimension(function (d) {
             var sex = d['SEX'];
             if (sex === 1) {
@@ -91,6 +94,13 @@ $(document).ready(function () {
             .elasticY(true)
             .xAxisLabel('Amount of Credit Given')
             .yAxisLabel('People');
+
+
+        defaultCountTicker
+            .group(defaultDim.group())
+            .formatNumber(d3.format(''));
+
+
         dc.renderAll();
 
     });
