@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Just the viz</title>
+    <link rel="stylesheet" href="static/dc.min.css">
+</head>
+<body>
+<div id="genderPie">
+          <span class='reset' style='visibility: hidden;'>
+          Current filter: <span class='filter'></span>
+        </span>
+    <a class='reset' href="#"
+       style='visibility: hidden;'>reset</a>
+    <br>
+</div>
+<div id="marriagePie">
+          <span class='reset' style='visibility: hidden;'>
+          Current filter: <span class='filter'></span>
+        </span>
+    <a class='reset' href="#"
+       style='visibility: hidden;'>reset</a>
+    <br>
+</div>
+<div id="ageDefaulters">
+    <span class='reset' style='visibility: hidden;'>
+          Current filter: <span class='filter'></span>
+        </span>
+    <a class='reset' href="#"
+       style='visibility: hidden;'>reset</a>
+    <br>
+</div>
+<div id="limitBalDefaulters">
+    <span class='reset' style='visibility: hidden;'>
+          Current filter: <span class='filter'></span>
+        </span>
+    <a class='reset' href="#"
+       style='visibility: hidden;'>reset</a>
+    <br>
+</div>
+<script type="application/javascript" src="static/jquery.min.js"></script>
+<script type="application/javascript" src="static/d3.v3.min.js"></script>
+<script type="application/javascript" src="static/crossfilter.min.js"></script>
+<script type="application/javascript" src="static/dc.min.js"></script>
+<script type="application/javascript">
+    $(document).ready(function () {
+        d3.json('data.json', function (data) {
+            var genderPieChart = dc.pieChart('#genderPie');
+            var marriagePieChart = dc.pieChart('#marriagePie');
+            var ageDefaultersChart = dc.barChart('#ageDefaulters');
+            var limitBalDefaultersChart = dc.lineChart('#limitBalDefaulters');
+            var ndx = crossfilter(data);
+            var all = ndx.groupAll();
+            var genderDim = ndx.dimension(function (d) {
+                var sex = d['SEX'];
+                if (sex === 1) {
+                    return 'Male';
+                } else if (sex == 2) {
+                    return 'Female';
+                } else {
+                    return 'Unknown';
+                }
+            });
+            var marriageDim = ndx.dimension(function (d) {
+                var status = d['MARRIAGE'];
+                if (status === 1) {
+                    return 'Married';
+                } else if (status == 2) {
+                    return 'Single';
+                } else if (status === 3) {
+                    return 'Others';
+                } else {
+                    return 'Unknown';
+                }
+            });
+
+            genderPieChart
+                    .width(180)
+                    .height(180)
+                    .radius(80)
+                    .dimension(genderDim)
+                    .group(genderDim.group());
+            genderPieChart.controlsUseVisibility(true);
+            $('#genderPie > a').on('click', function (e) {
+                genderPieChart.filterAll();
+                dc.redrawAll();
+            });
+
+            marriagePieChart
+                    .width(180)
+                    .height(180)
+                    .radius(80)
+                    .dimension(marriageDim)
+                    .group(marriageDim.group());
+            marriagePieChart.controlsUseVisibility(true);
+            $('#marriagePie > a').on('click', function (e) {
+                marriagePieChart.filterAll();
+                dc.redrawAll();
+            });
+            ageMinMax = d3.extent(data, function (d) {
+                return d['AGE'];
+            });
+            ageDefaultersDim = ndx.dimension(function (d) {
+                return d['AGE'];
+            });
+
+            ageDefaultersChart
+                    .width(900)
+                    .height(250)
+                    .dimension(ageDefaultersDim)
+                    .group(ageDefaultersDim.group().reduceSum(dc.pluck('default payment next month')))
+                    .x(d3.scale.linear().domain(ageMinMax));
+
+            limitDefaultersDim = ndx.dimension(function (d) {
+                return d['LIMIT_BAL'];
+            });
+
+            limitBalMinMax = d3.extent(data, function (d) {
+                return d['LIMIT_BAL']
+            });
+
+            limitBalDefaultersChart
+                    .width(1000)
+                    .height(200)
+                    .dimension(limitDefaultersDim)
+                    .group(limitDefaultersDim.group().reduceSum(dc.pluck('default payment next month')))
+                    .x(d3.scale.linear().domain(limitBalMinMax))
+                    .renderArea(true)
+                    .mouseZoomable(true);
+
+            dc.renderAll();
+
+        });
+    });
+</script>
+</body>
+</html>
