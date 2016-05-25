@@ -35,7 +35,7 @@
             <div class="columns">
                 <div class="column is-2">
                     <div id="genderPie">
-                        <span>Genders</span>
+                        <span>Gender</span>
                         <br>
           <span class='reset' style='visibility: hidden;'>
           Filter: <span class='filter'></span>
@@ -67,7 +67,8 @@
                 </div>
                 <div class="column is-10">
                     <div id="limitBalDefaulters">
-                        <span>Given Credit</span>
+                        <span>Credit Given</span>
+                        <br>
                     </div>
                 </div>
             </div>
@@ -75,7 +76,7 @@
     </div>
 </section>
 <section class="section">
-    <div class="container">
+    <div class="container" id="gettingStarted">
         <div class="heading">
             <h1 class="title">Getting Started</h1>
             <h2 class="subtitle">
@@ -110,6 +111,69 @@
 <section class="section">
     <div class="container">
         <div class="heading">
+            <h1 class="title">About</h1>
+        </div>
+        <div class="content">
+            <p>
+                d3.js is hard to comprehend in the beginning, at least it was for me. That's why there exists many
+                libraries to make it easier. dc.js is one of them, but it does not work by itself, it works alongside
+                Crossfilter. Crossfilter gives us linking for free while dc.js abstracts types of charts for us. If you
+                want to draw a line chart, simply call <code>dc.lineChart()</code>.
+            </p>
+            <p>
+                This tutorial will guide you through making two pie charts, a bar chart, and a area chart. To do this,
+                we will be using the data set linked in the <a href="#gettingStarted">getting started</a> section.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="heading">
+            <h1 class="title">Step 1: Cleaning up data</h1>
+        </div>
+        <div class="content">
+            <p>
+                The data set that we are using is in <code>xls</code> format which is not something we want to work
+                with. Therefore, we will need to convert it to something for JavaScript friendly, like JSON.
+                I cleared the first row in Excel then converted the file into <code>csv</code>
+                then imported it using Pandas. The data needs to be
+                in records format; this step is not optional, the JavaScript we will write for Crossfilter requires
+                this. The full code is below.
+            </p>
+            <p>
+                <code>
+                    import pandas as pd <br>
+                    import json
+
+                    data = pd.read_csv('default of credit card clients.csv') <br>
+                    with open('data.json', 'w') as f:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;f.write(data.reset_index().to_json(orient='records'))
+                </code>
+            </p>
+            <p>The cleaned CSV can be found <a href="static/data.csv">here</a> and the JSON file that we will be
+                using can be found <a href="static/data.json">here</a>.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="heading">
+            <h1 class="title">Step 2: Setup Crossfilters</h1>
+        </div>
+        <div class="content">
+            <p>
+
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="heading">
             <h1 class="title">Section</h1>
             <h2 class="subtitle">
                 A simple container to divide your page into <strong>sections</strong>, like the one you're currently
@@ -119,6 +183,41 @@
     </div>
 </section>
 
+<section class="section">
+    <div class="container">
+        <div class="heading">
+            <h1 class="title">Section</h1>
+            <h2 class="subtitle">
+                A simple container to divide your page into <strong>sections</strong>, like the one you're currently
+                reading
+            </h2>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="heading">
+            <h1 class="title">Section</h1>
+            <h2 class="subtitle">
+                A simple container to divide your page into <strong>sections</strong>, like the one you're currently
+                reading
+            </h2>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="heading">
+            <h1 class="title">Section</h1>
+            <h2 class="subtitle">
+                A simple container to divide your page into <strong>sections</strong>, like the one you're currently
+                reading
+            </h2>
+        </div>
+    </div>
+</section>
 
 <script type="application/javascript" src="static/jquery.min.js"></script>
 <script type="application/javascript" src="static/d3.v3.min.js"></script>

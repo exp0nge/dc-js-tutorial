@@ -81,8 +81,8 @@ $(document).ready(function () {
         });
 
         limitBalDefaultersChart
-            .width(1000)
-            .height(200)
+            .width(900)
+            .height(250)
             .dimension(limitDefaultersDim)
             .group(limitDefaultersDim.group().reduceSum(dc.pluck('default payment next month')))
             .x(d3.scale.linear().domain(limitBalMinMax))
@@ -91,7 +91,6 @@ $(document).ready(function () {
             .elasticY(true)
             .xAxisLabel('Amount of Credit Given')
             .yAxisLabel('People');
-
         dc.renderAll();
 
     });
