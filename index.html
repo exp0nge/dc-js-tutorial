@@ -34,8 +34,8 @@
         <br>
         <div class="content" style="min-height: 500px;">
             <div class="columns">
-                <div class="column notification is-primary is-one-quarter">
-                    <div class="default-count"><span class="number"></span></div>
+                <div class="column notification is-warning is-one-quarter">
+                    <div class="default-count"></div>
                     /30000 total defaulters
                 </div>
             </div>
@@ -115,7 +115,9 @@
             <p>
                 Additionally, you will need the following data set from
                 <a href="http://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients#">The UCI Machine
-                    Learning Repository.</a>
+                    Learning Repository.</a> The data set has information of 30,000 credit card holders who have either
+                defaulted on their payments or haven't, and includes both quantitative and qualitative data. Working
+                with multivariate data set like this allows us to really leverage the capabilities of dc.js.
             </p>
         </div>
     </div>
@@ -127,6 +129,7 @@
         <div class="heading">
             <h1 class="title">About</h1>
         </div>
+        <br>
         <div class="content">
             <p>
                 d3.js is hard to comprehend in the beginning, at least it was for me. That's why there exists many
@@ -135,7 +138,8 @@
                 want to draw a line chart, simply call <code>dc.lineChart()</code>.
             </p>
             <p>
-                This tutorial will guide you through making two pie charts, a bar chart, and a area chart. To do this,
+                This tutorial will guide you through making two pie charts, a bar chart, a area chart, and a counter
+                for number of defaulters. To do this,
                 we will be using the data set linked in the <a href="#gettingStarted">getting started</a> section.
             </p>
             <p>
@@ -151,6 +155,7 @@
         <div class="heading">
             <h1 class="title">Step 1: Cleaning up data</h1>
         </div>
+        <br>
         <div class="content">
             <p>
                 The data set that we are using is in <code>xls</code> format which is not something we want to work
@@ -165,6 +170,17 @@
             </p>
             <p>The cleaned CSV can be found <a href="static/data.csv">here</a> and the JSON file that we will be
                 using can be found <a href="static/data.json">here</a>.</p>
+
+            <p>The tutorial will show you how to add all four graphs and counter at once. However, if you do not feel
+            comfortable with getting all the charts at once, just omit the ones you don't want. The code has
+            been commented to a degree, but the variable names are straightforward.</p>
+            <ul>
+                <li><code>gender</code> -> Pie Chart of Gender</li>
+                <li><code>marriage</code> -> Pie Chart of Marriage Status</li>
+                <li><code>ageDefaulters</code> -> Bar Chart of Ages vs Defaulted Status</li>
+                <li><code>limitBalDefaulters</code> -> Area Chart of Credit Allowance vs # People</li>
+                <li><code>default-count</code> -> Counter for # of Defaulters</li>
+            </ul>
         </div>
     </div>
 </section>
@@ -172,16 +188,17 @@
 <section class="section">
     <div class="container">
         <div class="heading">
-            <h1 class="title">Step 2: Setup Crossfilters</h1>
+            <h1 class="title">Step 2: Setup Crossfilter</h1>
         </div>
+        <br>
         <div class="content">
             <p>
-                First setup Crossfilter with the JSON data. Use d3's <code>d3.json</code> method to get the JSON
+                First setup Crossfilter with the JSON data. Use d3's <code>d3.json()</code> method to get the JSON
                 data. Crossfilter allows us to setup filters on data sets. So if we wanted to filter all the records
                 where age > 30, we can create a dimension for that. Each of the following filters accomplishes this kind
                 of task. Each of these filters will be used in each one of our graphs. That's the "magic" of linking
                 in dc.js.
-                I've added comments in the snippet to explain what each one does.<br>
+                I've added comments in the snippet to explain what each line does.<br>
                 <script src="https://gist.github.com/exp0nge/4d7059c68828420b9fdeaec21c085fe1.js"></script>
             </p>
         </div>
@@ -193,9 +210,22 @@
         <div class="heading">
             <h1 class="title">Step 3: Setup HTML + dc.js Chart Handlers</h1>
         </div>
+        <br>
         <div class="content">
             <p>
-                Let's first setup all the <code>div</code>s we need for the four graphs and one ticker.
+                Let's first setup all the <code>div</code>s we need for the four graphs and one counter. Each div
+                has either a <code>class</code> or <code>id</code> selector so we can grab it with JavaScript.
+            </p>
+            <p>The following code snippet shows a HTML snippet which allows us to place a reset link alongside
+                all the filters that were applied to the chart as a result of interaction. We can turn this
+                functionality
+                on with a JavaScript flag and setup the <code>a</code> tag with jQuery.</p>
+            <p>
+                <script src="https://gist.github.com/exp0nge/58a659852746aa4cbe20a1c1593ca62e.js"></script>
+            </p>
+            <p>
+                Now for the full HTML snippet. I've taken out the row/column class, but if you are using a CSS
+                framework, feel free to add them in.
             </p>
             <p>
                 <script src="https://gist.github.com/exp0nge/ed3fbb312917685121a9ba7d3f0d595b.js"></script>
@@ -214,6 +244,7 @@
         <div class="heading">
             <h1 class="title">Step 4: Pie Charts</h1>
         </div>
+        <br>
         <div class="content">
             <p>First let's setup the pie charts we need. The first pie chart shows genders while the other shows
                 martial status. Code snippet below with comments.</p>
@@ -233,6 +264,7 @@
         <div class="heading">
             <h1 class="title">Step 5: Bar Chart</h1>
         </div>
+        <br>
         <div class="content">
             <p>Now let's setup the bar chart where age is displayed on the x-axis and the quantity on the y-axis.</p>
             <p>
@@ -248,11 +280,12 @@
         <div class="heading">
             <h1 class="title">Step 6: Area Chart</h1>
         </div>
+        <br>
         <div class="content">
             <p>The last visualization is a area chart using <code>dc.lineChart</code>. This visualization will show
                 amount of credit given on the x-axis and total number of people who received it on the y-axis. This
-            visualization is zoomable since there are some outliers who get a lot of credit which throws off the
-            scaling for the area.</p>
+                visualization is zoomable since there are some outliers who get a lot of credit which throws off the
+                scaling for the area.</p>
             <p>
                 <script src="https://gist.github.com/exp0nge/e8f43416656c7b79caff70909696ad83.js"></script>
             </p>
@@ -264,12 +297,13 @@
 <section class="section">
     <div class="container">
         <div class="heading">
-            <h1 class="title">Step 7: Data Ticker</h1>
+            <h1 class="title">Step 7: Data Counter</h1>
         </div>
+        <br>
         <div class="content">
-            <p>Lastly, we need a ticker to show the total number of defaulters under our interactions with the graphs.
-            dc makes this simple for us with a built-in that we previously declared, <code>dc.numberDisplay</code>.
-            There's a more advanced data counter that shows all records under each filter, but that's overkill.</p>
+            <p>Lastly, we need a counter to show the total number of defaulters under our interactions with the graphs.
+                dc makes this simple for us with a built-in that we previously declared, <code>dc.numberDisplay</code>.
+                There's a more advanced data counter that shows all records under each filter, but that's overkill.</p>
             <p>
                 <script src="https://gist.github.com/exp0nge/4a5ade615d0352b05902a0263bf203bc.js"></script>
             </p>
@@ -283,9 +317,10 @@
         <div class="heading">
             <h1 class="title">Step 8: Combine</h1>
         </div>
+        <br>
         <div class="content">
             <p>The last step is to call <code>dc.renderAll();</code> and we should see all our visualizations.
-            The below snippet shows the full JavaScript code with some cleanups.</p>
+                The below snippet shows the full JavaScript code with some cleanups.</p>
             <p>
                 <script src="https://gist.github.com/exp0nge/9638ef78e4e95a6ad12f4020b9715b33.js"></script>
             </p>
@@ -298,13 +333,29 @@
         <div class="heading">
             <h1 class="title">Closing Remarks</h1>
         </div>
+        <br>
         <div class="content">
             <p>Hopefully, this makes dc.js and d3.js seem a little less daunting. The full documentation for
-            dc.js can be found <a href="https://github.com/dc-js/dc.js/blob/master/web/docs/api-latest.md">here</a>.</p>
+                dc.js can be found <a href="https://github.com/dc-js/dc.js/blob/master/web/docs/api-latest.md">here</a>.
+            </p>
         </div>
     </div>
 </section>
-
+<footer class="footer">
+    <div class="container">
+        <div class="content has-text-centered">
+            <p>
+                This tutorial has been written for <a href="http://www-cs.ccny.cuny.edu/~grossberg/teaching.html">Data
+                Visualization CSc 59969</a> which is taught by
+                <a href="http://www-cs.ccny.cuny.edu/~grossberg">Professor Michael Grossberg</a> at The City College
+                of New York.
+            </p>
+            <p>
+                <a href="http://bulma.io/">Bulma</a> is the CSS framework that was used for this tutorial.
+            </p>
+        </div>
+    </div>
+</footer>
 <script type="application/javascript" src="static/js/jquery.min.js"></script>
 <script type="application/javascript" src="static/js/d3.v3.min.js"></script>
 <script type="application/javascript" src="static/js/crossfilter.min.js"></script>
