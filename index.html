@@ -160,14 +160,7 @@
                 this. The full code is below.
             </p>
             <p>
-                <code>
-                    import pandas as pd <br>
-                    import json
-
-                    data = pd.read_csv('default of credit card clients.csv') <br>
-                    with open('data.json', 'w') as f:<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;f.write(data.reset_index().to_json(orient='records'))
-                </code>
+                <script src="https://gist.github.com/exp0nge/f86a2188fdae1c0b1b608ce38f002723.js"></script>
             </p>
             <p>The cleaned CSV can be found <a href="static/data.csv">here</a> and the JSON file that we will be
                 using can be found <a href="static/data.json">here</a>.</p>
@@ -182,7 +175,13 @@
         </div>
         <div class="content">
             <p>
-
+                First setup Crossfilter with the JSON data. Use d3's <code>d3.json</code> method to get the JSON
+                data. Crossfilter allows us to setup filters on data sets. So if we wanted to filter all the records
+                where age > 30, we can create a dimension for that. Each of the following filters accomplishes this kind
+                of task. Each of these filters will be used in each one of our graphs. That's the "magic" of linking
+                in dc.js.
+                I've added comments in the snippet to explain what each one does.<br>
+                <script src="https://gist.github.com/exp0nge/4d7059c68828420b9fdeaec21c085fe1.js"></script>
             </p>
         </div>
     </div>
@@ -191,11 +190,20 @@
 <section class="section">
     <div class="container">
         <div class="heading">
-            <h1 class="title">Section</h1>
-            <h2 class="subtitle">
-                A simple container to divide your page into <strong>sections</strong>, like the one you're currently
-                reading
-            </h2>
+            <h1 class="title">Step 3: Setup HTML + dc.js Chart Handlers</h1>
+        </div>
+        <div class="content">
+            <p>
+                Let's first setup all the <code>div</code>s we need for the four graphs and one ticker.
+            </p>
+            <p>
+                <script src="https://gist.github.com/exp0nge/ed3fbb312917685121a9ba7d3f0d595b.js"></script>
+            </p>
+            <p>Then let's setup the dc.js handlers for each of these graphs. As I mentioned, dc.js actually understands
+                what type of graphs we want, so we can just do <code>dc.pieChart</code> for our pie charts.</p>
+            <p>
+                <script src="https://gist.github.com/exp0nge/80b0f270146d50e0a8aea0d05b3e707a.js"></script>
+            </p>
         </div>
     </div>
 </section>
@@ -203,11 +211,83 @@
 <section class="section">
     <div class="container">
         <div class="heading">
-            <h1 class="title">Section</h1>
-            <h2 class="subtitle">
-                A simple container to divide your page into <strong>sections</strong>, like the one you're currently
-                reading
-            </h2>
+            <h1 class="title">Step 4: Pie Charts</h1>
+        </div>
+        <div class="content">
+            <p>First let's setup the pie charts we need. The first pie chart shows genders while the other shows
+                martial status. Code snippet below with comments.</p>
+            <p>
+                <script src="https://gist.github.com/exp0nge/81edab8178d30e90f952eb2985404a86.js"></script>
+            </p>
+            <p>
+                <script src="https://gist.github.com/exp0nge/0643d612ec9491ceb57a1df3dc7a0448.js"></script>
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container">
+        <div class="heading">
+            <h1 class="title">Step 5: Bar Chart</h1>
+        </div>
+        <div class="content">
+            <p>Now let's setup the bar chart where age is displayed on the x-axis and the quantity on the y-axis.</p>
+            <p>
+                <script src="https://gist.github.com/exp0nge/683bf967bc33961d9e5f3a1be1c84885.js"></script>
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container">
+        <div class="heading">
+            <h1 class="title">Step 6: Area Chart</h1>
+        </div>
+        <div class="content">
+            <p>The last visualization is a area chart using <code>dc.lineChart</code>. This visualization will show
+                amount of credit given on the x-axis and total number of people who received it on the y-axis. This
+            visualization is zoomable since there are some outliers who get a lot of credit which throws off the
+            scaling for the area.</p>
+            <p>
+                <script src="https://gist.github.com/exp0nge/e8f43416656c7b79caff70909696ad83.js"></script>
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container">
+        <div class="heading">
+            <h1 class="title">Step 7: Data Ticker</h1>
+        </div>
+        <div class="content">
+            <p>Lastly, we need a ticker to show the total number of defaulters under our interactions with the graphs.
+            dc makes this simple for us with a built-in that we previously declared, <code>dc.numberDisplay</code>.
+            There's a more advanced data counter that shows all records under each filter, but that's overkill.</p>
+            <p>
+                <script src="https://gist.github.com/exp0nge/4a5ade615d0352b05902a0263bf203bc.js"></script>
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container">
+        <div class="heading">
+            <h1 class="title">Step 8: Combine</h1>
+        </div>
+        <div class="content">
+            <p>The last step is to call <code>dc.renderAll();</code> and we should see all our visualizations.
+            The below snippet shows the full JavaScript code with some cleanups.</p>
+            <p>
+                <script src="https://gist.github.com/exp0nge/9638ef78e4e95a6ad12f4020b9715b33.js"></script>
+            </p>
         </div>
     </div>
 </section>
@@ -215,23 +295,11 @@
 <section class="section">
     <div class="container">
         <div class="heading">
-            <h1 class="title">Section</h1>
-            <h2 class="subtitle">
-                A simple container to divide your page into <strong>sections</strong>, like the one you're currently
-                reading
-            </h2>
+            <h1 class="title">Closing Remarks</h1>
         </div>
-    </div>
-</section>
-
-<section class="section">
-    <div class="container">
-        <div class="heading">
-            <h1 class="title">Section</h1>
-            <h2 class="subtitle">
-                A simple container to divide your page into <strong>sections</strong>, like the one you're currently
-                reading
-            </h2>
+        <div class="content">
+            <p>Hopefully, this makes dc.js and d3.js seem a little less daunting. The full documentation for
+            dc.js can be found <a href="https://github.com/dc-js/dc.js/blob/master/web/docs/api-latest.md">here</a>.</p>
         </div>
     </div>
 </section>
