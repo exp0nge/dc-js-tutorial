@@ -13,7 +13,7 @@ $(document).ready(function () {
             var sex = d['SEX'];
             if (sex === 1) {
                 return 'Male';
-            } else if (sex == 2) {
+            } else if (sex === 2) {
                 return 'Female';
             } else {
                 return 'Unknown';
@@ -23,7 +23,7 @@ $(document).ready(function () {
             var status = d['MARRIAGE'];
             if (status === 1) {
                 return 'Married';
-            } else if (status == 2) {
+            } else if (status === 2) {
                 return 'Single';
             } else if (status === 3) {
                 return 'Others';
