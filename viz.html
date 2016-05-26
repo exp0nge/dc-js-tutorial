@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Just the viz</title>
-    <link rel="stylesheet" href="static/dc.min.css">
+    <link rel="stylesheet" href="static/css/dc.min.css">
 </head>
 <body>
 <div id="genderPie">
@@ -38,13 +38,13 @@
        style='visibility: hidden;'>reset</a>
     <br>
 </div>
-<script type="application/javascript" src="static/jquery.min.js"></script>
-<script type="application/javascript" src="static/d3.v3.min.js"></script>
-<script type="application/javascript" src="static/crossfilter.min.js"></script>
-<script type="application/javascript" src="static/dc.min.js"></script>
+<script type="application/javascript" src="static/js/jquery.min.js"></script>
+<script type="application/javascript" src="static/js/d3.v3.min.js"></script>
+<script type="application/javascript" src="static/js/crossfilter.min.js"></script>
+<script type="application/javascript" src="static/js/dc.min.js"></script>
 <script type="application/javascript">
     $(document).ready(function () {
-        d3.json('data.json', function (data) {
+        d3.json('static/data.json', function (data) {
             var genderPieChart = dc.pieChart('#genderPie');
             var marriagePieChart = dc.pieChart('#marriagePie');
             var ageDefaultersChart = dc.barChart('#ageDefaulters');
